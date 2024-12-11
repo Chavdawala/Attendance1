@@ -1,0 +1,109 @@
+/* Global styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('https://img.freepik.com/free-vector/technology-wire-mesh-network-connection-digital-background_1017-28407.jpg?t=st=1733828167~exp=1733831767~hmac=625ddfd0b89c11825514e247507343d1b3810e2b06892d583400bea8344a1cdb&w=1060');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #f4f1f1;
+  }
+  
+  /* Container for the login form */
+  .loginContainer {
+    width: 100%;
+    max-width: 400px;
+    background-color: rgba(95, 110, 155, 0.5);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Form Styles */
+  .login-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #eee7e7;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Input field focus state */
+  .form-group input:focus {
+    border-color: #3b82f6;
+    outline: none;
+  }
+  
+  /* Button Style */
+  .btn {
+    padding: 12px;
+    background-color: #3b82f6;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .sign{
+    color: #f4f1f1;
+  }
+  
+  .btn:hover {
+    background-color: #2563eb;
+  }
+  
+  /* Error message styles */
+  .error {
+    color: #e3342f;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 500px) {
+    .loginContainer {
+      padding: 20px;
+    }
+  
+    .form-group input {
+      font-size: 14px;
+    }
+  
+    .btn {
+      font-size: 14px;
+    }
+  }
+  

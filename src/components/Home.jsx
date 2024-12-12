@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // If you use axios
-import { Link } from 'react-router-dom'; 
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom'; 
 import './Home.css';
 
 const Home = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,34 +17,31 @@ const Home = () => {
     e.preventDefault();
     setError(''); // Clear previous errors
 
-    // Validation check
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields.');
       return;
     }
 
     try {
-      // POST request to the backend API (login endpoint)
       const response = await axios.post('http://localhost:5000/login', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      // If login is successful, store the JWT token in localStorage
       localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('userId', response.data.userId); 
+      localStorage.setItem('userName', response.data.name); 
+      localStorage.setItem('userEmail', response.data.email); 
 
-      // Redirect to the protected page or dashboard (example)
-      window.location.href = '/dashboard'; // Replace with your dashboard URL
+      // Navigate to the dashboard
+      navigate('/dashboard'); 
 
     } catch (err) {
-      // Handle error during login (invalid credentials, server issues, etc.)
       if (err.response) {
-        // Server responded with an error
-        setError(err.response.data.message || 'An error occurred');
+        setError(err.response.data.message || 'Invalid email or password.');
       } else {
-        // No response from the server
-        setError('Error connecting to the server');
+        setError('Error connecting to the server.');
       }
     }
   };
@@ -80,7 +78,6 @@ const Home = () => {
 
         <button type="submit" className="btn">Login</button>
 
-        {/* Link to the signup page */}
         <p className='sign'>
           Don't have an account? <Link to="/signup">Sign up</Link>
         </p>

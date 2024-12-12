@@ -1,0 +1,48 @@
+.dashboard-container {
+    color: white; /* Ensures all text is white */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: rgba(95, 110, 155, 0.5); 
+    backdrop-filter: blur(10px); 
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: white; /* Ensures heading is white */
+  }
+  
+  p {
+    color: white; /* Ensures paragraph text is white */
+  }
+  
+  .button-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  .logout-button {
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.7); 
+    color: white; /* Ensures button text is white */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+  

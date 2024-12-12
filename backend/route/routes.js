@@ -1,15 +1,14 @@
-// route/routes.js
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // Import the User model
+const User = require('../models/User');
 
-// POST request to register a new user
+// POST /api/register
 router.post('/register', async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
 
-  // Check if the email and password are provided
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Please provide an email and password.' });
+  // Validate input
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: 'All fields are required.' });
   }
 
   try {
@@ -19,19 +18,15 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'User already exists.' });
     }
 
-    // Create a new user instance
-    const newUser = new User({
-      email,
-      password, // The password will be hashed when saving due to the pre-save hook
-    });
-
-    // Save the user to the database
+    // Create new user
+    const newUser = new User({ name, email, password });
     await newUser.save();
 
-    res.status(201).json({ message: 'User registered successfully' });
+    // Send back the user data (name, email) along with the success message
+    res.status(201).json({ message: 'User registered successfully!', user: { name: newUser.name, email: newUser.email } });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Error registering user:', error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 

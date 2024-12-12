@@ -6,7 +6,8 @@ const bcrypt = require('bcryptjs');
 const User = require('./models/User');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
-
+const loginRoutes = require('./route/login');
+const logoutRoutes = require('./route/logout');
 const userRoutes = require('./route/routes');  
 
 // Load environment variables
@@ -19,7 +20,8 @@ const port = 5000;
 connectDB();
 app.use(cors());
 app.use(express.json());
-app.use('/api', userRoutes);  // Use 'userRoutes' instead of 'routes'
+app.use('/api', userRoutes);  
+app.use('/api', loginRoutes)
 
 // Route to handle login
 app.post('/login', async (req, res) => {

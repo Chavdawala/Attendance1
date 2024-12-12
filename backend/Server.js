@@ -8,7 +8,7 @@ const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 const loginRoutes = require('./route/login');
 const logoutRoutes = require('./route/logout');
-const userRoutes = require('./route/routes');  
+const userRoutes = require('./route/routes');
 
 // Load environment variables
 dotenv.config();
@@ -21,7 +21,8 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 app.use('/api', userRoutes);  
-app.use('/api', loginRoutes)
+app.use('/login', loginRoutes);
+app.use('/logout', logoutRoutes);
 
 // Route to handle login
 app.post('/login', async (req, res) => {

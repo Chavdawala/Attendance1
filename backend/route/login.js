@@ -1,7 +1,7 @@
 // backend/routes/login.js
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // Ensure the correct path to your User model
+const User = require('../models/User'); 
 const bcrypt = require('bcryptjs');
 
 // POST /api/login
@@ -25,20 +25,17 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ message: 'Invalid email or password.' });
         }
 
-        // Store login time in the database
-        const currentLoginTime = new Date(); // Get the current date and time
-        user.loginTime = currentLoginTime; // Update the loginTime field
+        const currentLoginTime = new Date(); 
+        user.loginTime = currentLoginTime; 
 
-        // Save the user with the updated loginTime
         await user.save();
 
-        // Send the response with the user's info
         res.status(200).json({
             message: 'Login successful',
             user: {
                 name: user.name,
                 email: user.email,
-                loginTime: user.loginTime,  // Include loginTime in the response
+                loginTime: user.loginTime, 
             },
         });
     } catch (error) {

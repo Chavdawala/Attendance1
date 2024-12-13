@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Signup.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [name, setname] = useState('');
@@ -108,6 +109,10 @@ function Signup() {
           Sign Up
         </button>
       </form>
+      {/* <p className='login'>
+        Back to Login Page{' '}
+        <Link to="/Home">Login</Link>
+      </p> */}
     </div>
   );
 }

@@ -1,7 +1,8 @@
-// backend/routes/register.js
 const express = require('express');
-const router = express.Router();
-const User = require('../models/User'); // Import the User model
+const jwt = require('jsonwebtoken'); // Add this if not already imported
+const router = express.Router(); // Initialize the router object
+const User = require('../models/User'); // Adjust the path to your User model
+const cors = require('cors');
 
 // POST /api/register
 router.post('/register', async (req, res) => {
@@ -27,4 +28,23 @@ router.post('/register', async (req, res) => {
     }
 });
 
-module.exports = router;
+// GET /api/user
+router.get('/user', async (req, res) => {
+    try {
+        const authToken = req.headers.authorization.split("@")[1]; // Extract the token
+        const userId = jwt.verify(authToken, "your_secret_key").id; // Decode the token to get user ID
+
+        // Fetch user from the database
+        const user = await User.findById(userId).select("name email");
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json(user);
+    } catch (error) {
+        console.error('Error in /api/user:', error.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+module.exports = router; // Export the router

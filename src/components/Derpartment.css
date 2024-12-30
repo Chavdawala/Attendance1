@@ -1,0 +1,49 @@
+/* Main container styling */
+.main-container {
+  display: flex; /* Use flexbox for manual control */
+  flex-wrap: wrap; /* Allow wrapping to multiple rows */
+  gap: 20px; /* Space between items */
+  justify-content: center; /* Center containers horizontally */
+  padding: 20px;
+  max-width: 1200px; /* Container max width */
+  margin: 0 auto; /* Center the grid on the page */
+  background-color: #f9f9f9;
+}
+
+/* Individual card container styling */
+.container {
+  width: 200px; /* Fixed width */
+  height: 250px; /* Fixed height */
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex; /* Flexbox for inner content */
+  flex-direction: column; /* Align items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Image styling */
+.container .image img {
+  width: 120px; /* Fixed image size */
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%; /* Circular image */
+  margin-bottom: 15px;
+  border: 3px solid #007bff;
+}
+
+/* Text styling */
+.container .text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}

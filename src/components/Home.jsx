@@ -17,66 +17,87 @@ const Home = () => {
         e.preventDefault();
         setError('');
 
+        // Validate form fields
         if (!formData.email || !formData.password) {
             setError('Please fill in all fields.');
             return;
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/login', formData, {
+            // Send login request
+            const response = await axios.post('http://localhost:5000/api/login', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
 
-            localStorage.setItem('authToken', response.data.token);
-            localStorage.setItem('userId', response.data.userId);
-            localStorage.setItem('userName', response.data.name);
-            localStorage.setItem('userEmail', response.data.email);
-            localStorage.setItem('loginTime', response.data.loginTime);
+            // Log API response for debugging
+            console.log('API Response:', response.data);
 
-            navigate('/dashboard');
+            // Extract response data
+            const { authToken, user } = response.data;
+
+            // Check if token exists
+            if (!authToken) {
+                throw new Error('No token received from the server.');
+            }
+
+            // Store data in localStorage
+            localStorage.setItem('authToken', authToken);
+            localStorage.setItem('userId', user.id);
+            localStorage.setItem('userName', user.name);
+            localStorage.setItem('userEmail', user.email);
+
+            // Log stored token for debugging
+            console.log('Stored token:', localStorage.getItem('authToken'));
+
+            // Navigate to the next page
+            navigate('/Index');
         } catch (err) {
-            setError(err.response?.data.message || 'Error connecting to the server.');
+            // Handle errors
+            console.error('Error response:', err.response);
+            setError(err.response?.data?.message || 'Error connecting to the server.');
         }
     };
 
     return (
-        <div className="loginContainer">
-            <form className="login-form" onSubmit={handleSubmit}>
-                <h2>Login</h2>
-                {error && <p className="error">{error}</p>}
+        <div className='fullscreen'>
+            <div className="loginContainer">
+                <form className="login-form" onSubmit={handleSubmit}>
+                    <h2>Login</h2>
+                    {error && <p className="error">{error}</p>}
 
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                <button type="submit" className="btn">Login</button>
+                    <button type="submit" className="btn">Login</button>
 
-                <p className='sign'>
-                    Don't have an account? <Link to="/signup">Sign up</Link>
-                </p>
-            </form>
+                    <p className='sign'>
+                        Don't have an account? <Link to="/signup">Sign up</Link>
+                    </p>
+                </form>
+            </div>
         </div>
     );
 };

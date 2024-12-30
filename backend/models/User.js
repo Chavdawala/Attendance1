@@ -6,8 +6,14 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
-    loginTime: { type: Date, default: null },
-    logoutTime: { type: Date, default: null },
+    createdAt: { type: Date, default: Date.now }, 
+    loginTimes: [{
+        time: { type: Date },        // Store the login time
+        latitude: { type: String },  // Store the latitude at the time of login
+        longitude: { type: String }, // Store the longitude at the time of login
+    }],
+    logoutTimes: [{ type: Date }],
+    authToken: { type: String },
 });
 
 // Middleware to hash the password before saving

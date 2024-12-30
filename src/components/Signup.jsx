@@ -81,7 +81,8 @@ function Signup() {
 
   return (
     <div style={styles.container}>
-      <h2>Sign Up</h2>
+      <h2 style={{ color: 'black' }}>Sign Up</h2>
+
       {errorMessage && <p style={styles.error}>{errorMessage}</p>}
       <form onSubmit={handleSubmit} style={styles.form}>
         <input

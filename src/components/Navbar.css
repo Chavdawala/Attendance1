@@ -1,0 +1,39 @@
+/* Basic styling for the navbar */
+.navbar {
+    position: fixed; /* Fix navbar to the left side of the screen */
+    top: 0; /* Align it to the top */
+    left: 0; /* Align it to the left edge */
+    height: 120vh;
+    margin-top: 50px;
+    width: 150px; /* Set the width of the navbar */
+    background-color: #222D31; /* Dark background color for the navbar */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Align items vertically */
+    padding-top: 20px; /* Space at the top of the navbar */
+    color: white; /* Text color for the navbar */
+    overflow-y: auto; /* Ensure navbar scrolls if content overflows */
+}
+
+.navbar-list {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+.navbar-list li {
+    margin: 15px 0; /* Space between each navbar item */
+    color: white; /* Make list item text white */
+}
+
+.navbar-list a {
+    color: white; /* Link color should be white */
+    text-decoration: none; /* Remove underline */
+    font-size: 18px; /* Set font size */
+    display: block; /* Make the link take up the full width */
+    padding: 10px; /* Add padding inside each link */
+}
+
+.navbar-list a:hover {
+    background-color: #555; /* Darker background on hover */
+    border-radius: 5px; /* Optional rounded corners */
+}

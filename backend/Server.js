@@ -1,55 +1,34 @@
-// /server.js
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const User = require('./models/User');
-const connectDB = require('./config/db');
 const dotenv = require('dotenv');
-const loginRoutes = require('./route/login');
-const logoutRoutes = require('./route/logout');
-const userRoutes = require('./route/routes');
+const app = express();
 
 // Load environment variables
 dotenv.config();
 
-const app = express();
-const port = 5000;
-
-// Connect to MongoDB
-connectDB();
+// Middleware
 app.use(cors());
-app.use(express.json());
-app.use('/api', userRoutes);  
-app.use('/login', loginRoutes);
-app.use('/logout', logoutRoutes);
+app.use(express.json()); // To parse JSON bodies
 
-// Route to handle login
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+// Import routes
+const register = require('./route/routes');
+const loginRoute = require('./route/login');
+const userRoute = require('./route/user');
+const logoutTime = require('./route/Logouttime'); // Corrected to match the import
 
-  // Find the user in the database
-  const user = await User.findOne({ email });
-  
-  if (!user) {
-    return res.status(404).json({ message: 'User not found' });
-  }
+// Use routes
+app.use('/api', register);  // Register route under /api
+app.use('/api', loginRoute);      // Login route under /api
+app.use('/api', userRoute);
+app.use('/api', logoutTime);  // Corrected to match the import
 
-  // Check if the entered password matches the stored hashed password
-  const isMatch = await user.comparePassword(password);
-
-  if (!isMatch) {
-    return res.status(400).json({ message: 'Invalid credentials' });
-  }
-
-  // Generate JWT token
-  const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-  // Send token in the response
-  res.json({ message: 'Login successful', token });
-});
-
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// Database connection
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log('MongoDB connected');
+        app.listen(process.env.PORT || 5000, () => {
+            console.log(`Server running on port ${process.env.PORT || 5000}`);
+        });
+    })
+    .catch(err => console.log(err));

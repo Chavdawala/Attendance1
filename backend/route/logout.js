@@ -9,8 +9,8 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
-    loginTime: { type: Date, default: null },
-    logoutTime: { type: Date, default: null },
+    loginTimes: { type: Date, default: null },
+    logoutTimes: { type: Date, default: null },
 });
 
 // Middleware to hash password
@@ -33,6 +33,5 @@ userSchema.methods.comparePassword = async function(enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
 
-// Export the model
 
 module.exports = User;

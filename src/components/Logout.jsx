@@ -41,8 +41,9 @@ function DateTimeDisplay() {
     }
 
     try {
+      const VITE_API_URL_3 = import.meta.env.VITE_API_URL_3 || 'http://localhost:5000/api/logout'
       const response = await axios.post(
-        "http://localhost:5000/api/logout",
+        `${VITE_API_URL_3}/api/logout`,
         {
           logoutTimes: formattedLogoutTime,
           email: email,

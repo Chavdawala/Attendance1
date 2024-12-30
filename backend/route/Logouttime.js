@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User'); // Your User model
 const router = express.Router();
 
-// POST: Store logout time for an existing user
-router.post('/logout', async (req, res) => {
+const VITE_API_URL_3= process.env.VITE_API_URL_3 || 'http://localhost:5000/api/logout'
+router.post(`${VITE_API_URL_3}/logout`, async (req, res) => {
     const { logoutTimes, email } = req.body; 
     console.log(email, logoutTimes);
 

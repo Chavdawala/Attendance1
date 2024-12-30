@@ -1,16 +1,13 @@
 const express = require('express');
-const User = require('../models/User'); // Assuming you have a User model
+const User = require('../models/User'); 
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 
-// Secret key for JWT (replace with your secure secret key, use environment variable in production)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-
-// POST: Store loginTime for an existing user and generate JWT
-router.post('/user', async (req, res) => {
+const VITE_API_URL_2 = process.env.VITE_API_URL_2 || 'https://localhost:5000/api/user';
+router.post(`${VITE_API_URL_2}/user`, async (req, res) => {
     const { loginTime, email, name, latitude, longitude } = req.body;
 
-    // Validation to ensure that email, name, loginTime, latitude, and longitude are provided
     if (!loginTime || !email || !name || !latitude || !longitude) {
         return res.status(400).json({ message: 'All fields (loginTime, email, name, latitude, longitude) are required.' });
     }
@@ -23,10 +20,9 @@ router.post('/user', async (req, res) => {
             return res.status(404).json({ message: 'User not found.' });
         }
 
-        // Validate and add the new login time with latitude and longitude
-        const newLoginTime = new Date(loginTime);  // User's provided time
-        const offset = 5.5 * 60; // IST is UTC+5:30
-        const istTime = new Date(newLoginTime.getTime() + offset * 60000); // Adjust time to IST
+        const newLoginTime = new Date(loginTime); 
+        const offset = 5.5 * 60;
+        const istTime = new Date(newLoginTime.getTime() + offset * 60000); 
 
         // Add the new login entry with latitude and longitude
         user.loginTimes.push({
@@ -37,10 +33,10 @@ router.post('/user', async (req, res) => {
 
         // Generate a JWT for the user
         const tokenPayload = {
-            id: user._id,       // Include user ID in the token
-            email: user.email,  // Include email for reference
+            id: user._id,      
+            email: user.email,  
         };
-        const token = jwt.sign(tokenPayload, JWT_SECRET, { expiresIn: '5h' }); // Token valid for 5 hours
+        const token = jwt.sign(tokenPayload, JWT_SECRET, { expiresIn: '5h' }); 
 
         // Save the updated user document
         await user.save();
@@ -60,7 +56,7 @@ router.post('/user', async (req, res) => {
         if (error.name === 'MongoError' && error.code === 11000) {
             return res.status(400).json({ message: 'Email is already taken.' });
         }
-        res.status(500).json({ message: 'Internal Server Error.', error: error.message });  // Provide more details in the response
+        res.status(500).json({ message: 'Internal Server Error.', error: error.message });  
     }
 });
 

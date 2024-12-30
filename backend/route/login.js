@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User'); 
 const router = express.Router(); 
 
-// POST method for login
-router.post('/login', async (req, res) => {
+const VITE_API_URL =  process.env.VITE_API_URL ||'http://localhost:5000/api/login'
+router.post(`${VITE_API_URL}/login`, async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => {
 });
 
 // GET method for login (Example: Retrieve user details from token)
-router.get('/login', async (req, res) => {
+router.get(`${VITE_API_URL}`, async (req, res) => {
     try {
         // Get the token from the Authorization header
         const authToken = req.headers.authorization?.split('@')[1];

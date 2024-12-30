@@ -71,11 +71,12 @@ function DateTimeDisplay() {
       return;
     }
 
-    const formattedLoginTime = formatLoginTime(new Date()); // Format current date and time in IST
+    const formattedLoginTime = formatLoginTime(new Date()); 
 
     try {
+      const VITE_API_URL_2 = import.meta.env.VITE_API_URL_2 || 'http://localhost:5000/api/user'
       const response = await axios.post(
-        "http://localhost:5000/api/user",
+        `${VITE_API_URL_2}/api/user`,
         {
           loginTime: formattedLoginTime,
           email,

@@ -21,7 +21,8 @@ function Signup() {
     const userData = { name, email, password };
 
     try {
-      const response = await fetch('http://localhost:5000/api/register', {
+      const VITE_API_URL_1 = process.env.VITE_API_URL_1 || 'http://localhost:5000/api/register';
+      const response = await fetch(`${VITE_API_URL_1}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,10 +111,6 @@ function Signup() {
           Sign Up
         </button>
       </form>
-      {/* <p className='login'>
-        Back to Login Page{' '}
-        <Link to="/Home">Login</Link>
-      </p> */}
     </div>
   );
 }

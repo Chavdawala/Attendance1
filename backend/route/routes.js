@@ -4,8 +4,8 @@ const router = express.Router(); // Initialize the router object
 const User = require('../models/User'); // Adjust the path to your User model
 const cors = require('cors');
 
-// POST /api/register
-router.post('/register', async (req, res) => {
+const  VITE_API_URL_1 = process.env.VITE_API_URL_1 || 'http://localhost:5000/api/register';
+router.post(`${VITE_API_URL_1}/register`, async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
